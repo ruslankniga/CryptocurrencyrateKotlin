@@ -2,14 +2,13 @@ package com.example.cryptocurrencyratekotlin
 
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.cryptocurrencyratekotlin.model.Crupt
 import com.example.cryptocurrencyratekotlin.model.CruptRateList
 import com.example.cryptocurrencyratekotlin.repository.RateListRepository
@@ -17,14 +16,13 @@ import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.LegendRenderer
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
-import java.util.*
-
+import kotlinx.coroutines.*
+import kotlin.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
 class DataCruptFragment : Fragment() {
 
     private var repository: RateListRepository? = null
-    private var mTimer: Timer = Timer()
-    private var flag: Boolean = true
 
     private var rank: TextView? = null
     private var name: TextView? = null
@@ -36,6 +34,7 @@ class DataCruptFragment : Fragment() {
     private var graphView: GraphView? = null
 
     private var crupt: Crupt? = null
+    private var graphIsDefined = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,12 +47,14 @@ class DataCruptFragment : Fragment() {
             requireContext(),
             "https://api.coincap.io/v2/assets/" + crupt?.id + "/"
         )
-
-        repository = RateListRepository(ratesRequest)
         ratesRequest.makeRequest()
 
-        startAlarm()
+        repository = RateListRepository(ratesRequest)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            setGraph()
         }
+    }
 
 
     override fun onCreateView(
@@ -81,16 +82,11 @@ class DataCruptFragment : Fragment() {
 
         val button: Button = view.findViewById(R.id.button)
         button.setOnClickListener {
-            val fragment = RecycleViewFragment()
-            val fm: FragmentManager = requireActivity().supportFragmentManager
-            val ft: FragmentTransaction = fm.beginTransaction()
 
             val bundle: Bundle = Bundle()
             bundle.putInt("position", crupt!!.rank.toInt())
-            fragment.arguments  = bundle
 
-            ft.replace(R.id.mainFragment, fragment)
-            ft.commit()
+            (activity as MainActivity).navController.navigate(R.id.action_dataCruptFragment_to_recycleViewFragment, bundle)
         }
 
         return view
@@ -114,30 +110,13 @@ class DataCruptFragment : Fragment() {
         graphView!!.legendRenderer.align = LegendRenderer.LegendAlign.TOP
     }
 
-    private fun startAlarm() {
-        mTimer.scheduleAtFixedRate(
-            object : TimerTask() {
-                override fun run() {
-                    if(isAdded()) {
-                        requireActivity().runOnUiThread {
-                            UpdateGraph()
-                        }
-                    }
-                }
-            }, 0
-            , 1000
-        )
-    }
-
-    private fun UpdateGraph() {
-        if (flag) {
-            if (repository!!.rates != null) {
-
-                Graph(repository!!.rates)
-                flag = false
-                mTimer.cancel()
+    private fun setGraph(){
+        do {
+            if (repository?.getRateList() != null){
+                Graph(repository?.getRateList())
+                graphIsDefined = true
             }
-        }
+        } while (graphIsDefined == false)
     }
 }
 

@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptocurrencyratekotlin.DataCruptFragment
+import com.example.cryptocurrencyratekotlin.MainActivity
 import com.example.cryptocurrencyratekotlin.R
 
 class CruptAdapter(val cruptList: CruptList?, val context: Context, val recyclerView: RecyclerView?, val activity: FragmentActivity?)
@@ -28,12 +29,8 @@ class CruptAdapter(val cruptList: CruptList?, val context: Context, val recycler
 
             val bundle: Bundle = Bundle()
             bundle.putParcelable("Crupt", cruptList!!.getByIndex(index))
-            fragment.arguments  = bundle
 
-            val fm: FragmentManager = activity!!.supportFragmentManager
-            val ft: FragmentTransaction = fm.beginTransaction()
-            ft.replace(R.id.mainFragment, fragment)
-            ft.commit()
+            (activity as MainActivity).navController.navigate(R.id.action_recycleViewFragment_to_dataCruptFragment, bundle)
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CruptViewHolder {
@@ -58,7 +55,12 @@ class CruptAdapter(val cruptList: CruptList?, val context: Context, val recycler
     }
 
     override fun getItemCount(): Int {
-        return cruptList!!.size
+        if (cruptList != null){
+        return cruptList.size
+        }
+        else{
+            return 0
+        }
     }
 
     class CruptViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/recycleViewFragment">
+
+    <fragment
+        android:id="@+id/recycleViewFragment"
+        android:name="com.example.cryptocurrencyratekotlin.RecycleViewFragment"
+        android:label="fragment_recycle_view"
+        tools:layout="@layout/fragment_recycle_view" >
+        <action
+            android:id="@+id/action_recycleViewFragment_to_dataCruptFragment"
+            app:destination="@id/dataCruptFragment"
+            app:enterAnim="@android:anim/slide_in_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/dataCruptFragment"
+        android:name="com.example.cryptocurrencyratekotlin.DataCruptFragment"
+        android:label="fragment_data_crupt"
+        tools:layout="@layout/fragment_data_crupt" >
+        <action
+            android:id="@+id/action_dataCruptFragment_to_recycleViewFragment"
+            app:destination="@id/recycleViewFragment" />
+    </fragment>
+</navigation>

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptocurrencyratekotlin.model.CruptAdapter
 import com.example.cryptocurrencyratekotlin.model.CruptList
 import com.example.cryptocurrencyratekotlin.repository.CruptListRepository
-import com.example.cryptocurrencyratekotlin.repository.CruptsRepository
+import kotlinx.coroutines.*
 import java.util.*
 
 
@@ -19,21 +19,23 @@ class RecycleViewFragment : Fragment() {
     private var recyclerView: RecyclerView? = null
     private var cruptAdapter: CruptAdapter? = null
     private var repository: CruptListRepository? = null
-    private var mTimer: Timer = Timer()
-    private var flag: Boolean = true
+    private var adapterIsDefined = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val cruptsRequest: CruptsRequest = CruptsRequest(
+        val cruptsRequest = CruptsRequest(
             requireContext(),
             "https://api.coincap.io/v2/"
         )
-
-        repository = CruptListRepository(cruptsRequest)
         cruptsRequest.makeRequest()
 
-        startAlarm()
+        repository = CruptListRepository(cruptsRequest, this)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            updateAdapter()
+        }
     }
 
     override fun onCreateView(
@@ -55,30 +57,20 @@ class RecycleViewFragment : Fragment() {
         return view
     }
 
-    private fun startAlarm() {
-        mTimer.scheduleAtFixedRate(
-            object : TimerTask() {
-                override fun run() {
-                    if (isAdded()) {
-                        requireActivity().runOnUiThread {
-                            UpdateRecyclerView()
-                        }
-                    }
+    private fun updateAdapter() {
+        do {
+            if (repository?.getCruptList() != null) {
+                CoroutineScope(Dispatchers.Main).launch {
+                    setAdapter()
                 }
-            }, 0
-            , 1000
-        )
-    }
-
-    private fun UpdateRecyclerView() {
-        if (flag) {
-            if (repository!!.crupts != null) {
-
-                cruptAdapter = CruptAdapter(repository!!.crupts, requireContext(), recyclerView, activity)
-                recyclerView!!.adapter = cruptAdapter
-                flag = false
-                mTimer.cancel()
             }
-        }
+        } while (adapterIsDefined == false)
     }
+
+    private fun setAdapter() {
+        cruptAdapter = CruptAdapter(repository?.getCruptList(), requireContext(), recyclerView, activity)
+        recyclerView?.adapter = cruptAdapter
+        adapterIsDefined = true
+    }
+
 }

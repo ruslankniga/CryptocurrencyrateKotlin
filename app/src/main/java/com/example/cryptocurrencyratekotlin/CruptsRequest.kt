@@ -2,8 +2,11 @@ package com.example.cryptocurrencyratekotlin
 
 import android.content.Context
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.cryptocurrencyratekotlin.model.CruptList
-import com.example.cryptocurrencyratekotlin.repository.BaseRepository
+import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,8 +20,8 @@ class CruptsRequest(val context: Context, val path: String) {
 
     var cruptList: CruptList? = null
 
-    fun makeRequest(){
 
+    fun makeRequest() {
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(path)
             .addConverterFactory(GsonConverterFactory.create())
@@ -42,3 +45,5 @@ class CruptsRequest(val context: Context, val path: String) {
         })
     }
 }
+
+

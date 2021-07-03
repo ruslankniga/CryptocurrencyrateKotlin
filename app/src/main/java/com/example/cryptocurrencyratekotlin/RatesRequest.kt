@@ -5,6 +5,8 @@ import android.widget.Toast
 import com.example.cryptocurrencyratekotlin.model.CruptList
 import com.example.cryptocurrencyratekotlin.model.CruptRate
 import com.example.cryptocurrencyratekotlin.model.CruptRateList
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

@@ -5,9 +5,10 @@ import com.example.cryptocurrencyratekotlin.RatesRequest
 import com.example.cryptocurrencyratekotlin.model.CruptList
 import com.example.cryptocurrencyratekotlin.model.CruptRateList
 
-class RateListRepository (val ratessRequest: RatesRequest) :
-    RatesCruptRepository {
+class RateListRepository (val ratessRequest: RatesRequest) {
 
-    override val rates: CruptRateList?
-        get() = ratessRequest.ratesList
+    fun getRateList() : CruptRateList?
+    {
+        return ratessRequest.ratesList
+    }
 }
