@@ -8,7 +8,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-internal class CruptListRepository(val cruptsRequest: CruptsRequest, recycleFragment: RecycleViewFragment){
+internal class CruptListRepository(val cruptsRequest: CruptsRequest){
 
     fun getCruptList() : CruptList? {
         return cruptsRequest.cruptList

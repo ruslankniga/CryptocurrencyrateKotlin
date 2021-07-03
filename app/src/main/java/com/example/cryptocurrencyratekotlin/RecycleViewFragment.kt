@@ -31,7 +31,7 @@ class RecycleViewFragment : Fragment() {
         )
         cruptsRequest.makeRequest()
 
-        repository = CruptListRepository(cruptsRequest, this)
+        repository = CruptListRepository(cruptsRequest)
 
         CoroutineScope(Dispatchers.IO).launch {
             updateAdapter()
