@@ -22,7 +22,7 @@ class CruptsRequest(val context: Context, val path: String, val fragment: Recycl
 
         val api = retrofit.create(Api::class.java)
 
-        GlobalScope.launch(Dispatchers.Main){
+        GlobalScope.launch(Dispatchers.IO){
             cruptList = api.getCrupt()
             fragment.setAdapter()
         }

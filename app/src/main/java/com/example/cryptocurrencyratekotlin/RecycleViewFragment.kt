@@ -52,8 +52,9 @@ class RecycleViewFragment : Fragment() {
     }
 
     fun setAdapter() {
-        cruptAdapter = CruptAdapter(repository?.getCruptList(), requireContext(), recyclerView, activity)
-        recyclerView?.adapter = cruptAdapter
+        CoroutineScope(Dispatchers.Main).launch {
+            cruptAdapter = CruptAdapter(repository?.getCruptList(), requireContext(), recyclerView, activity)
+            recyclerView?.adapter = cruptAdapter
+        }
     }
-
 }
