@@ -1,17 +1,13 @@
 package com.example.cryptocurrencyratekotlin.repository
 
+import androidx.lifecycle.MutableLiveData
 import com.example.cryptocurrencyratekotlin.CruptsRequest
-import com.example.cryptocurrencyratekotlin.RecycleViewFragment
 import com.example.cryptocurrencyratekotlin.model.CruptList
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
-internal class CruptListRepository(val cruptsRequest: CruptsRequest){
+internal class CruptListRepository(val cruptsRequest: CruptsRequest) {
 
-    fun getCruptList() : CruptList? {
+
+    fun getCruptList(): CruptList? {
         return cruptsRequest.cruptList
     }
-
 }

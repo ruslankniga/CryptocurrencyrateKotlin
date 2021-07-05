@@ -9,9 +9,9 @@ import retrofit2.http.GET
 interface Api {
 
     @GET("assets")
-    fun getCrupt(): Call<CruptList>
+    suspend fun getCrupt(): CruptList?
 
 
     @GET("history?interval=d1")
-    fun getCruptRate(): Call<CruptRateList>
+    suspend fun getCruptRate(): CruptRateList?
 }

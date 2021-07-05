@@ -8,10 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptocurrencyratekotlin.model.CruptAdapter
-import com.example.cryptocurrencyratekotlin.model.CruptList
 import com.example.cryptocurrencyratekotlin.repository.CruptListRepository
 import kotlinx.coroutines.*
-import java.util.*
 
 
 class RecycleViewFragment : Fragment() {
@@ -19,7 +17,6 @@ class RecycleViewFragment : Fragment() {
     private var recyclerView: RecyclerView? = null
     private var cruptAdapter: CruptAdapter? = null
     private var repository: CruptListRepository? = null
-    private var adapterIsDefined = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,15 +24,12 @@ class RecycleViewFragment : Fragment() {
 
         val cruptsRequest = CruptsRequest(
             requireContext(),
-            "https://api.coincap.io/v2/"
+            "https://api.coincap.io/v2/",
+                this
         )
-        cruptsRequest.makeRequest()
-
         repository = CruptListRepository(cruptsRequest)
 
-        CoroutineScope(Dispatchers.IO).launch {
-            updateAdapter()
-        }
+        cruptsRequest.makeRequest()
     }
 
     override fun onCreateView(
@@ -57,20 +51,9 @@ class RecycleViewFragment : Fragment() {
         return view
     }
 
-    private fun updateAdapter() {
-        do {
-            if (repository?.getCruptList() != null) {
-                CoroutineScope(Dispatchers.Main).launch {
-                    setAdapter()
-                }
-            }
-        } while (adapterIsDefined == false)
-    }
-
-    private fun setAdapter() {
+    fun setAdapter() {
         cruptAdapter = CruptAdapter(repository?.getCruptList(), requireContext(), recyclerView, activity)
         recyclerView?.adapter = cruptAdapter
-        adapterIsDefined = true
     }
 
 }

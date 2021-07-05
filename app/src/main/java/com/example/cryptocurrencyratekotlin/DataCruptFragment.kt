@@ -44,22 +44,19 @@ class DataCruptFragment : Fragment() {
 
 
         val ratesRequest: RatesRequest = RatesRequest(
-            requireContext(),
-            "https://api.coincap.io/v2/assets/" + crupt?.id + "/"
+                requireContext(),
+                "https://api.coincap.io/v2/assets/" + crupt?.id + "/",
+                this
         )
-        ratesRequest.makeRequest()
-
         repository = RateListRepository(ratesRequest)
 
-        CoroutineScope(Dispatchers.IO).launch {
-            setGraph()
-        }
+        ratesRequest.makeRequest()
     }
 
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_data_crupt, container, false)
@@ -92,11 +89,10 @@ class DataCruptFragment : Fragment() {
         return view
     }
 
-    private fun Graph(cruptRateList: CruptRateList?){
+    private fun Graph(cruptRateList: CruptRateList?) {
         val series = LineGraphSeries<DataPoint>()
 
-        for (i in 0 until cruptRateList!!.size)
-        {
+        for (i in 0 until cruptRateList!!.size) {
             series.appendData(DataPoint(i.toDouble(), cruptRateList.getByIndex(i)?.priceUsd!!.toDouble()), true, cruptRateList.size)
         }
 
@@ -110,13 +106,8 @@ class DataCruptFragment : Fragment() {
         graphView!!.legendRenderer.align = LegendRenderer.LegendAlign.TOP
     }
 
-    private fun setGraph(){
-        do {
-            if (repository?.getRateList() != null){
-                Graph(repository?.getRateList())
-                graphIsDefined = true
-            }
-        } while (graphIsDefined == false)
+    fun setGraph() {
+        Graph(repository?.getRateList())
     }
 }
 
