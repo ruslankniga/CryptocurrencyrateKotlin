@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "332126573665",
+    "project_id": "cryptocurrency-rate",
+    "storage_bucket": "cryptocurrency-rate.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:332126573665:android:a98b4853d115de9f468620",
+        "android_client_info": {
+          "package_name": "com.example.cryptocurrencyratekotlin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "332126573665-e70hoq5vr9jlv4rou3jne2f5efofhnnk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cryptocurrencyratekotlin",
+            "certificate_hash": "a5a0809d708d78ac521f2a48ee1f9cbf64099447"
+          }
+        },
+        {
+          "client_id": "332126573665-oojdh43gj3ogh3qd10g9iakd393hrrgu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOfClGNsKZogiDILBuviUYxGD9Oa9iIjo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "332126573665-oojdh43gj3ogh3qd10g9iakd393hrrgu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
