@@ -21,11 +21,13 @@ import com.example.cryptocurrencyratekotlin.Notification.PushService
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 
+//Класс реализующий главную активити
 class MainActivity : AppCompatActivity() {
 
     lateinit var navController: NavController
     private lateinit var pushBroadcastReceiver: BroadcastReceiver
 
+    //Инициализация переменных
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -63,11 +65,13 @@ class MainActivity : AppCompatActivity() {
         registerReceiver(pushBroadcastReceiver, intentFilter)
     }
 
+    //Очистка ресурсов
     override fun onDestroy() {
         unregisterReceiver(pushBroadcastReceiver)
         super.onDestroy()
     }
 
+    //Метод переопределяющий событие при нажатии на клавишу "Назад"
     override fun onBackPressed(){
         AlertDialog.Builder(this).apply {
             setTitle("Подтверждение")

@@ -14,10 +14,12 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+//Класс реализующий запрос на список стоимости криптовалюты в определённый период времени
 class RatesRequest(val context: Context, val path: String, val fragment: DataCruptFragment) {
 
     var ratesList: CruptRateList? = null
 
+    //Метод в котором происходит запрос
     fun makeRequest(){
 
         val retrofit: Retrofit = Retrofit.Builder()

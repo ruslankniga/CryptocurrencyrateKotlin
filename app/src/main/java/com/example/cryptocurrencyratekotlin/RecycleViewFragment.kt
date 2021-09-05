@@ -11,14 +11,14 @@ import com.example.cryptocurrencyratekotlin.model.CruptAdapter
 import com.example.cryptocurrencyratekotlin.repository.CruptListRepository
 import kotlinx.coroutines.*
 
-
+//Класс реализующий фрагмент со списком криптовалют
 class RecycleViewFragment : Fragment() {
 
     private var recyclerView: RecyclerView? = null
     private var cruptAdapter: CruptAdapter? = null
     private var repository: CruptListRepository? = null
 
-
+    //Метод в котором инициализируются переменные
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -32,6 +32,7 @@ class RecycleViewFragment : Fragment() {
         cruptsRequest.makeRequest()
     }
 
+    //Метод в котором инициализируются поля
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,6 +52,7 @@ class RecycleViewFragment : Fragment() {
         return view
     }
 
+    //Метод в котором устанавливается адаптер для списка RecyclerView
     fun setAdapter() {
         CoroutineScope(Dispatchers.Main).launch {
             cruptAdapter = CruptAdapter(repository?.getCruptList(), requireContext(), recyclerView, activity)

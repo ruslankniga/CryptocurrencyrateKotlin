@@ -3,6 +3,7 @@ package com.example.cryptocurrencyratekotlin
 import java.math.BigDecimal
 import java.math.RoundingMode
 
+//Интерфейс для изменения формата чисел
 interface СhangeFormat {
     companion object {
         fun bdFormat(value: String?): Double {

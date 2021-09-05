@@ -3,6 +3,7 @@ package com.example.cryptocurrencyratekotlin.model
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
+//Класс хранящий список объектов класса криптовалют
 class CruptList {
 
     @SerializedName("data")

@@ -4,6 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.example.cryptocurrencyratekotlin.СhangeFormat
 
+//Класс для хранения криптовалюты
 class Crupt(parcel: Parcel) : Parcelable {
     var id: String = ""
     var rank: String = ""
@@ -40,6 +41,7 @@ class Crupt(parcel: Parcel) : Parcelable {
         vwap24Hr = data[10].toString()
     }
 
+    //Parcelable для передачи криптовалюты между фрагментами
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeStringArray(arrayOf(id, rank, symbol, name, supply, maxSupply, marketCapUsd, volumeUsd24Hr,
                 priceUsd, changePercent24Hr, vwap24Hr))

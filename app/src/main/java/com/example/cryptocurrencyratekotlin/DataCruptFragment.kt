@@ -20,6 +20,7 @@ import kotlinx.coroutines.*
 import kotlin.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
+//Класс реализующий фрагмет с доп. данными о криптовалюте
 class DataCruptFragment : Fragment() {
 
     private var repository: RateListRepository? = null
@@ -36,6 +37,7 @@ class DataCruptFragment : Fragment() {
     private var crupt: Crupt? = null
     private var graphIsDefined = false
 
+    //Метод в котором инициализируются переменные при запуске фрагмента
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -53,7 +55,7 @@ class DataCruptFragment : Fragment() {
         ratesRequest.makeRequest()
     }
 
-
+    //Метод в котором инициализируются поля при запуске фрагмента
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -89,6 +91,7 @@ class DataCruptFragment : Fragment() {
         return view
     }
 
+    //Метод реализующий отрисовке графика
     private fun Graph(cruptRateList: CruptRateList?) {
         val series = LineGraphSeries<DataPoint>()
 

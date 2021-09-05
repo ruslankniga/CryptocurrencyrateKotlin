@@ -17,11 +17,12 @@ import com.example.cryptocurrencyratekotlin.DataCruptFragment
 import com.example.cryptocurrencyratekotlin.MainActivity
 import com.example.cryptocurrencyratekotlin.R
 
+//Класс определяющий формат вывода криптовалюты в списке RecyclerView
 class CruptAdapter(val cruptList: CruptList?, val context: Context, val recyclerView: RecyclerView?, val activity: FragmentActivity?)
     : RecyclerView.Adapter<CruptAdapter.CruptViewHolder>() {
 
 
-
+    //Метод обрабатывающий событие происходящее по нажатию на определённую криптовалюту
     private val mOnClickListener = View.OnClickListener { v ->
 
             val fragment = DataCruptFragment()
@@ -39,6 +40,7 @@ class CruptAdapter(val cruptList: CruptList?, val context: Context, val recycler
         return CruptViewHolder(view)
     }
 
+    //Метод определяющий формат списка
     override fun onBindViewHolder(holder: CruptViewHolder, position: Int) {
         val crupt: Crupt = cruptList!!.getByIndex(position)
 
@@ -63,6 +65,7 @@ class CruptAdapter(val cruptList: CruptList?, val context: Context, val recycler
         }
     }
 
+    //Класс инициализирующий поля списка
     class CruptViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var rank: TextView
         var symbol: TextView
