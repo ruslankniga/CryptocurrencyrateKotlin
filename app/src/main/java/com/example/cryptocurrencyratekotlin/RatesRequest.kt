@@ -30,9 +30,14 @@ class RatesRequest(val context: Context, val path: String, val fragment: DataCru
 
         val api: Api = retrofit.create(Api::class.java)
 
-        GlobalScope.launch(Dispatchers.IO){
-            ratesList = api.getCruptRate()
-            fragment.setGraph()
+        GlobalScope.launch(Dispatchers.Main){
+            try {
+                ratesList = api.getCruptRate()
+                fragment.setGraph()
+            } catch (e: NumberFormatException){
+                return@launch
+            }
+
         }
     }
 }

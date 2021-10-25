@@ -24,9 +24,14 @@ class CruptsRequest(val context: Context, val path: String, val fragment: Recycl
 
         val api = retrofit.create(Api::class.java)
 
-        GlobalScope.launch(Dispatchers.IO){
-            cruptList = api.getCrupt()
-            fragment.setAdapter()
+        GlobalScope.launch(Dispatchers.Main){
+
+            try {
+                cruptList = api.getCrupt()
+                fragment.setAdapter()
+            } catch (e: NumberFormatException){
+                return@launch
+            }
         }
     }
 }

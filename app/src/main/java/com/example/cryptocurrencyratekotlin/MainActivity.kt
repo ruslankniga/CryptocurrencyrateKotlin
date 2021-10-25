@@ -6,20 +6,13 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
-import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.component2
-import androidx.core.view.isVisible
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.cryptocurrencyratekotlin.Notification.PushService
 import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.FirebaseMessagingService
 
 //Класс реализующий главную активити
 class MainActivity : AppCompatActivity() {
@@ -33,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         navController = Navigation.findNavController(this, R.id.mainFragment)
 
+        startService(Intent(this, MyService::class.java))
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener{ task ->
             if (!task.isSuccessful){
@@ -50,7 +44,8 @@ class MainActivity : AppCompatActivity() {
                     when (extras.getString(key)) {
                         PushService.ACTION_SHOW_MESSAGE -> {
                             extras.getString(PushService.KEY_MESSAGE)?.let { message ->
-                                Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
+                                Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT)
+                                    .show()
                             }
                         }
                         else -> Log.e("TAG", "No needed key found")
@@ -78,12 +73,16 @@ class MainActivity : AppCompatActivity() {
             setMessage("Вы уверены, что хотите выйти из программы?")
 
             setPositiveButton("Да") { _, _ ->
+
+
                 System.exit(-1)
             }
 
-            setNegativeButton("Нет"){_, _ ->
-                Toast.makeText(this@MainActivity, "Thank you",
-                    Toast.LENGTH_LONG).show()
+            setNegativeButton("Нет"){ _, _ ->
+                Toast.makeText(
+                    this@MainActivity, "Thank you",
+                    Toast.LENGTH_LONG
+                ).show()
             }
             setCancelable(true)
         }.create().show()
